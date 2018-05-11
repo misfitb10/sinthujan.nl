@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500');
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #f4f0f1;
+}
+
+body {
+    margin: 30px;
+    color: #625e5e;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 17px;
+    background-color: #fff;
+}
+
+body.noScroll {
+    overflow: hidden;
+}
+
+
+
+/*
+    Typography
+*/
+h1, h2, p {
+    margin: 0;
+}
+
+h1, h2 {
+    margin: 0 0 20px 0;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+p {
+    margin: 0 0 15px 0;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+p + h2 {
+    margin-top: 50px;
+}
+
+h1 + img {
+    margin: 20px 0;
+}
+
+
+
+/*
+    Page wrapper
+    Contains the `website`
+*/
+.page {
+    max-width: 1196px;
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+/*
+    Header, Footer
+    Both are identical
+    Contains logo and social media icons
+*/
+.header, .footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header {
+    margin-bottom: 50px;
+    padding-top: 50px;
+}
+
+.footer {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+
+
+/*
+    Social media list
+    Contains social media icons
+    Can be found in the header and footer
+*/
+.social-media__list {
+    display: flex;
+}
+
+.social-media__list li {
+    margin-left: 20px;
+}
+
+
+
+/*
+    Regular / generic sections/content blocks
+    Section = wrapper
+    Content blocks = blocks in the wrapper
+*/
+.section {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 125px 0;
+}
+
+.section:last-child {
+    margin: 0 0 25px 0;
+}
+
+.content-block {
+    width: 49%;
+}
+
+.content-block--full-width {
+    width: 100%;
+}
+
+.content-block__image {
+    background-color: #f4f0f1;
+    text-align: center;
+    padding: 20px;
+}
+
+
+
+/*
+    Portfolio
+    Left side = List (portfolio items)
+    Right side = Image which relates to the portfolio item
+*/
+.portfolio__list a {
+    color: inherit;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 24px;
+}
+
+.portfolio__list a:hover {
+    color: #000;
+}
+
+.portfolio__main-image {
+    max-width: 100%;
+    display: inline-block;
+}
+
+.mobile-portfolio__list-item {
+    margin: 0 0 25px 0;
+}
+
+/*
+    Portfolio Project (Overlay/Pop-up)
+    Will be shown after clicking on a project (image)
+*/
+.portfolio__project {
+    display: none;
+    background-color: #f4f0f1;
+    padding: 20px 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 75%;
+    width: 100%;
+    max-width: 1196px;
+    overflow-y: scroll;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.portfolio__project-item {
+    display: none;
+}
+
+.portfolio__close-button {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: 1px solid #000;
+    background: #f4f0f1;
+    color: #000;
+    font-weight: bold;
+    padding: 2px 10px;
+}
+
+.portfolio__close-button:hover {
+    background-color: #000;
+    border: 1px solid #000;
+    color: #fff;
+}
+
+.section__portfolio .content-block__image {
+    min-height: 420px;
+}
+
+
+
+/*
+    Contact
+    E-mail and Telephone icons + info
+ */
+.contact__list-item {
+    margin: 0 0 10px 0;
+    position: relative;
+}
+
+.contact__list-item a {
+    color: inherit;
+}
+
+.contact__list-item span {
+    position: relative;
+    top: -10px;
+    left: 10px;
+}
+
+
+
+/*
+    Helper classes
+ */
+.is-active {
+    display: block;
+}
+
+.clear-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.flexed {
+    display: flex;
+    justify-content: space-between;
+}
+
+.show-till-tabletL {
+    display: none;
+}
+
+.bg__overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.bg__overlay.show {
+    display: block;
+}
+
+
+
+/*
+    Media Queries
+*/
+@media screen and (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .section {
+        margin: 0 0 50px 0;
+    }
+
+    .section__portfolio .content-block__text {
+        display: none;
+    }
+
+    .portfolio__project {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transform: translate(0,0);
+    }
+
+    .portfolio__project .content-block__text {
+        width: 100%;
+    }
+
+    .portfolio__project .content-block__image {
+        display: none;
+    }
+
+    .content-block__small-images {
+        display: block;
+    }
+
+    .content-block__small-images img {
+        display: inline-block;
+        max-width: 100%;
+    }
+
+    .hide-till-tabletL {
+        display: none;
+    }
+
+    .show-till-tabletL {
+        display: block;
+    }
+}
