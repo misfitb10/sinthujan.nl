@@ -1,64 +1,74 @@
 var gulp = require('gulp');
-var htmlmin = require('gulp-htmlmin');
-var imagemin = require('gulp-imagemin');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
+var gulpLoadPlugins = require('gulp-load-plugins');
+var plugins = gulpLoadPlugins();
+// var htmlmin = require('gulp-htmlmin');
+// var imagemin = require('gulp-imagemin');
+// var concat = require('gulp-concat');
+// var uglify = require('gulp-uglify');
+// var rename = require('gulp-rename');
+var sass = require('gulp-sass');
 var cleanCSS = require('gulp-clean-css');
 var del = require('del');
 
 var paths = {
+    buildFolder: 'build',
     markup: {
         src: 'src/index.html',
         dest: 'build/'
     },
     images: {
         src: 'src/images/**/*',
-        dest: 'build/images/'
+        dest: 'build/assets/images/'
     },
     styles: {
-        src: 'src/styles/*.css',
+        src: 'src/styles/**/*.scss',
         dest: 'build/assets/'
     },
     scripts: {
         src: 'src/scripts/*.js',
         dest: 'build/assets/'
+    },
+    config: {
+        autoprefix: 'last 2 versions, Explorer >= 10, Firefox >= 25'
     }
 };
 
 function clean() {
-    return del(['assets']);
+    return del(paths.buildFolder);
 }
 
 function markup() {
     return gulp.src(paths.markup.src)
-        .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(plugins.htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest(paths.markup.dest));
 }
 
 function images() {
     return gulp.src(paths.images.src)
-        .pipe(imagemin([
-            imagemin.gifsicle({interlaced: true}),
-            imagemin.jpegtran({progressive: true}),
-            imagemin.optipng({optimizationLevel: 5})]))
+        .pipe(plugins.imagemin([
+            plugins.imagemin.gifsicle({interlaced: true}),
+            plugins.imagemin.jpegtran({progressive: true}),
+            plugins.imagemin.optipng({optimizationLevel: 5})]))
         .pipe(gulp.dest(paths.images.dest))
 }
 
 function styles() {
     return gulp.src(paths.styles.src)
-        .pipe(cleanCSS())
-        .pipe(rename({
+        .pipe(plugins.sass().on('error', sass.logError))
+        .pipe(plugins.autoprefixer(paths.config.autoprefix.split(', '))) // Autoprefixes CSS properties
+        //.pipe(plugins.if(minify, plugins.cssnano())) // Minifies css if minify property is enabled
+        .pipe(plugins.rename({
             basename: 'main',
             suffix: '.min'
         }))
-        .pipe(gulp.dest(paths.styles.dest));
+        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(plugins.size({title: 'CSS'}));
 }
 
 function scripts() {
     return gulp.src(paths.scripts.src, {sourcemaps: true})
-        .pipe(uglify())
-        .pipe(concat('main.min.js'))
+        .pipe(plugins.uglify())
+        .pipe(plugins.concat('main.min.js'))
         .pipe(gulp.dest(paths.scripts.dest));
 }
 

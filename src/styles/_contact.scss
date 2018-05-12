@@ -1,0 +1,20 @@
+/*
+    Contact
+    E-mail and Telephone icons + info
+ */
+.contact {
+    &__list-item {
+        margin: 0 0 10px 0;
+        position: relative;
+
+        a {
+            color: inherit;
+        }
+
+        span {
+            position: relative;
+            top: -10px;
+            left: 10px;
+        }
+    }
+}

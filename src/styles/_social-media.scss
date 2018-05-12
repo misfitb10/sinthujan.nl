@@ -1,0 +1,14 @@
+/*
+    Social media list
+    Contains social media icons
+    Can be found in the header and footer
+*/
+.social-media {
+    &__list {
+        display: flex;
+
+        li {
+            margin-left: 20px;
+        }
+    }
+}

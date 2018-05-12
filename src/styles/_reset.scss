@@ -1,0 +1,23 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: $color-brand-primary;
+}
+
+body {
+    background-color: $color-brand-secondary;
+    color: #625e5e;
+    font-family: $font-stack-default;
+    font-size: $font-size-default;
+    margin: 30px;
+
+    @media screen and (max-width: 768px) {
+        margin: 10px;
+    }
+
+    &.noScroll {
+        overflow: hidden;
+    }
+}

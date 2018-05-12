@@ -1,0 +1,33 @@
+/*
+    Page wrapper
+    Only used once, as it is the overall wrapper
+    Contains the `website`
+*/
+.page {
+    max-width: 1196px;
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+/*
+    Header, Footer
+    Both are identical
+    Contains logo and social media icons
+*/
+.header, .footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header {
+    margin-bottom: 50px;
+    padding-top: 50px;
+}
+
+.footer {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}

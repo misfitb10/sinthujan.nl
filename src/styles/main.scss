@@ -1,0 +1,53 @@
+@import "variables";
+@import "reset";
+@import "helpers";
+@import "page-structure";
+@import "content-blocks";
+@import "typography";
+@import "social-media";
+@import "portfolio";
+@import "contact";
+
+/*
+    TODO: Fix these Media Queries!
+    Media Queries
+*/
+
+@media screen and (max-width: 1024px) {
+    .section__portfolio .content-block__text {
+        display: none;
+    }
+
+    .portfolio__project {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transform: translate(0,0);
+    }
+
+    .portfolio__project .content-block__text {
+        width: 100%;
+    }
+
+    .portfolio__project .content-block__image {
+        display: none;
+    }
+
+    .content-block__small-images {
+        display: block;
+    }
+
+    .content-block__small-images img {
+        display: inline-block;
+        max-width: 100%;
+    }
+
+    .hide-till-tabletL {
+        display: none;
+    }
+
+    .show-till-tabletL {
+        display: block;
+    }
+}
