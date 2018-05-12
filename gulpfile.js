@@ -1,91 +1,72 @@
-var gulp = require('gulp');
-var gulpLoadPlugins = require('gulp-load-plugins');
-var plugins = gulpLoadPlugins();
-// var htmlmin = require('gulp-htmlmin');
-// var imagemin = require('gulp-imagemin');
-// var concat = require('gulp-concat');
-// var uglify = require('gulp-uglify');
-// var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var cleanCSS = require('gulp-clean-css');
-var del = require('del');
+"use strict";
 
-var paths = {
-    buildFolder: 'build',
-    markup: {
-        src: 'src/index.html',
-        dest: 'build/'
-    },
-    images: {
-        src: 'src/images/**/*',
-        dest: 'build/assets/images/'
-    },
-    styles: {
-        src: 'src/styles/**/*.scss',
-        dest: 'build/assets/'
-    },
-    scripts: {
-        src: 'src/scripts/*.js',
-        dest: 'build/assets/'
-    },
-    config: {
-        autoprefix: 'last 2 versions, Explorer >= 10, Firefox >= 25'
-    }
-};
+// config.path config file for Gulp only
+var config = require('./gulpconfig.json');
+
+var gulp = require('gulp'),
+    gulpLoadPlugins = require('gulp-load-plugins'),
+    plugins = gulpLoadPlugins(),
+    sass = require('gulp-sass'),
+    del = require('del'),
+    yargs = require('yargs').argv,
+    minify = !!yargs.minify;
 
 function clean() {
-    return del(paths.buildFolder);
+    return del(config.path.build.main);
 }
 
-function markup() {
-    return gulp.src(paths.markup.src)
+function html() {
+    return gulp.src(config.path.src.html)
         .pipe(plugins.htmlmin({collapseWhitespace: true}))
-        .pipe(gulp.dest(paths.markup.dest));
+        .pipe(gulp.dest(config.path.build.main))
+        .pipe(plugins.size({title: '--> HTML'}));
 }
 
 function images() {
-    return gulp.src(paths.images.src)
+    return gulp.src(config.path.src.images)
         .pipe(plugins.imagemin([
             plugins.imagemin.gifsicle({interlaced: true}),
             plugins.imagemin.jpegtran({progressive: true}),
             plugins.imagemin.optipng({optimizationLevel: 5})]))
-        .pipe(gulp.dest(paths.images.dest))
+        .pipe(gulp.dest(config.path.build.images))
+        .pipe(plugins.size({title: '--> Images'}));
 }
 
 function styles() {
-    return gulp.src(paths.styles.src)
+    return gulp.src(config.path.src.styles)
         .pipe(plugins.sass().on('error', sass.logError))
-        .pipe(plugins.autoprefixer(paths.config.autoprefix.split(', '))) // Autoprefixes CSS properties
-        //.pipe(plugins.if(minify, plugins.cssnano())) // Minifies css if minify property is enabled
+        .pipe(plugins.autoprefixer(config.path.autoprefixer.split(', '))) // Autoprefixes CSS properties
+        .pipe(plugins.if(minify, plugins.cssnano())) // Minifies css if minify property is enabled
         .pipe(plugins.rename({
             basename: 'main',
             suffix: '.min'
         }))
-        .pipe(gulp.dest(paths.styles.dest))
-        .pipe(plugins.size({title: 'CSS'}));
+        .pipe(gulp.dest(config.path.build.assets))
+        .pipe(plugins.size({title: '--> CSS'}));
 }
 
 function scripts() {
-    return gulp.src(paths.scripts.src, {sourcemaps: true})
-        .pipe(plugins.uglify())
+    return gulp.src(config.path.src.scripts, {sourcemaps: true})
+        .pipe(plugins.if(minify, plugins.uglify()))
         .pipe(plugins.concat('main.min.js'))
-        .pipe(gulp.dest(paths.scripts.dest));
+        .pipe(gulp.dest(config.path.build.assets))
+        .pipe(plugins.size({title: '--> Scripts'}));
 }
 
 function watch() {
-    gulp.watch(paths.markup.src, markup);
-    gulp.watch(paths.images.src, images);
-    gulp.watch(paths.scripts.src, scripts);
-    gulp.watch(paths.styles.src, styles);
+    gulp.watch(config.path.src.html, html);
+    gulp.watch(config.path.src.images, images);
+    gulp.watch(config.path.src.scripts, scripts);
+    gulp.watch(config.path.src.styles, styles);
 }
 
-exports.markup = markup;
+exports.html = html;
 exports.images = images;
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.watch = watch;
 
-var build = gulp.series(clean, gulp.parallel(markup, images, styles, scripts));
+var build = gulp.series(clean, gulp.parallel(html, images, styles, scripts));
 gulp.task('build', build);
 gulp.task('default', build);

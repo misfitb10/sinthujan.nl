@@ -1,0 +1,17 @@
+{
+  "path": {
+    "src": {
+      "main": "src",
+      "html": "src/index.html",
+      "images": "src/images/**/*",
+      "styles": "src/styles/**/*.scss",
+      "scripts": "src/scripts/*.js"
+    },
+    "build": {
+      "main": "build",
+      "assets": "build/assets",
+      "images": "build/assets/images/"
+    },
+    "autoprefixer": "last 2 versions, Explorer >= 11, Firefox >= 60"
+  }
+}
