@@ -1,6 +1,6 @@
 "use strict";
 
-// config.path config file for Gulp only
+// Config file for Gulp
 var config = require('./gulpconfig.json');
 
 var gulp = require('gulp'),
@@ -17,7 +17,7 @@ function clean() {
 
 function html() {
     return gulp.src(config.path.src.html)
-        .pipe(plugins.htmlmin({collapseWhitespace: true}))
+        .pipe(plugins.htmlmin({collapseWhitespace: true, removeComments: true}))
         .pipe(gulp.dest(config.path.build.main))
         .pipe(plugins.size({title: '--> HTML'}));
 }
@@ -35,8 +35,8 @@ function images() {
 function styles() {
     return gulp.src(config.path.src.styles)
         .pipe(plugins.sass().on('error', sass.logError))
-        .pipe(plugins.autoprefixer(config.path.autoprefixer.split(', '))) // Autoprefixes CSS properties
-        .pipe(plugins.if(minify, plugins.cssnano())) // Minifies css if minify property is enabled
+        .pipe(plugins.autoprefixer(config.path.autoprefixer.split(', ')))
+        .pipe(plugins.if(minify, plugins.cssnano()))
         .pipe(plugins.rename({
             basename: 'main',
             suffix: '.min'
