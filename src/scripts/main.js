@@ -21,19 +21,18 @@ document.addEventListener('DOMContentLoaded', function() {
         projectContainer = document.querySelector(portfolioClassNames.projectsContainer);
 
     function portfolio() {
-        portfolioLink.forEach(function(link) {
-            var dataImg = link.getAttribute('data-image'),
-                dataProjectItem = link.getAttribute('data-projectitem'),
-                projectItem = document.querySelector('.portfolio__' + dataProjectItem);
+        for (var i = 0; i < portfolioLink.length; i++) {
+            portfolioLink[i].addEventListener('mouseover', function() {
+                var dataImg = this.getAttribute('data-image');
+                portfolioMainImage.setAttribute('src', dataImg);
+            });
 
-            if (dataImg !== null) {
-                link.addEventListener('mouseover', function() {
-                    portfolioMainImage.setAttribute('src', dataImg);
-                });
-            }
-
-            link.addEventListener('click', function(e) {
+            portfolioLink[i].addEventListener('click', function(e) {
                 e.preventDefault();
+
+                var dataProjectItem = this.getAttribute('data-projectitem'),
+                    projectItem = document.querySelector('.portfolio__' + dataProjectItem);
+
                 projectContainer.classList.add(portfolioClassNames.activeClass);
 
                 if (projectItem !== null) {
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showOverlay();
                 disableBodyScroll();
             });
-        });
+        }
 
         closeButton.addEventListener('click', function(e) {
             e.preventDefault();
@@ -64,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function removeProjectItemsActiveClasses() {
-        projectItems.forEach(function(projectItem) {
-            projectItem.classList.remove(portfolioClassNames.activeClass);
-        });
+        for (var i = 0; i < projectItems.length; i++) {
+            projectItems[i].classList.remove(portfolioClassNames.activeClass);
+        }
     }
 
     function showOverlay() {

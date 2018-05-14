@@ -25,9 +25,17 @@
 .header {
     margin-bottom: 50px;
     padding-top: 50px;
+
+    @media screen and (max-width: 768px) {
+        padding-top: 25px;
+    }
 }
 
 .footer {
     margin-top: 50px;
     padding-bottom: 50px;
+
+    @media screen and (max-width: 768px) {
+        padding-bottom: 25px;
+    }
 }

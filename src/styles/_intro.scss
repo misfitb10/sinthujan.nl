@@ -1,0 +1,15 @@
+.section__intro {
+    background-image: url('images/sinthujan.jpg');
+    background-size: cover;
+    background-position: center -150px;
+    background-repeat: no-repeat;
+    min-height: 68vh;
+
+    @media screen and (max-width: 768px) {
+        h1 { font-size: 24px; margin: 0; }
+    }
+
+    @media screen and (max-width: 1024px) {
+        background-position: center center;
+    }
+}

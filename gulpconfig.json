@@ -1,14 +1,14 @@
 {
   "path": {
     "src": {
-      "main": "src",
+      "main": "src/",
       "html": "src/index.html",
       "images": "src/images/**/*",
       "styles": "src/styles/**/*.scss",
       "scripts": "src/scripts/*.js"
     },
     "build": {
-      "main": "build",
+      "main": "build/",
       "assets": "build/assets",
       "images": "build/assets/images/"
     },
